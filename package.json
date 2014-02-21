@@ -1,0 +1,25 @@
+{
+  "name": "whistle",
+  "version": "0.1.0",
+  "author": "Mukund Lakshman <yaymukund@gmail.com>",
+  "description": "A tiny server for maintaining the state of a music room.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yaymukund/whistle.git"
+  },
+  "keywords": [
+    "whistle"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "private": true,
+  "dependencies": {
+    "request": "~2.34.0",
+    "rsvp": "~3.0.6"
+  },
+  "devDependencies": {
+    "socket.io": "~0.9.16"
+  }
+}
