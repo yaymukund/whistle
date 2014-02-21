@@ -14,6 +14,7 @@ describe('Room', function() {
   it('returns the URL and currentTime', function(done) {
     Room.fetch(1).then(function(room) {
       expect(room.url).to.equal('http://test.host/rock.mp3');
+      expect(room.currentTime).to.equal(0);
       done();
     });
   });
