@@ -1,12 +1,13 @@
 var util = require('./support/util'),
     Room = require('../lib/room'),
+    Client = require('../lib/client'),
     Track = require('../lib/track'),
     expect = require('expect.js');
 
 describe('Room', function() {
   describe('.create', function() {
     beforeEach(function() {
-      util.mockRequest('/rooms/1', {
+      util.mockGet('/rooms/67', {
         room: {
           tracks: [{url: 'http://test.host/rock.mp3'}]
         }
@@ -14,15 +15,15 @@ describe('Room', function() {
     });
 
     it('returns a new Room instance', function(done) {
-      Room.fetch(1).then(function(room) {
-        expect(room.url).to.equal('http://test.host/rooms/1');
-        expect(room.id).to.equal(1);
+      Room.fetch(67).then(function(room) {
+        expect(room.url).to.equal('http://test.host/rooms/67');
+        expect(room.id).to.equal(67);
         done();
       });
     });
 
     it('sets the track correctly', function(done) {
-      Room.fetch(1).then(function(room) {
+      Room.fetch(67).then(function(room) {
         expect(room.track.url).to.equal('http://test.host/rock.mp3');
         expect(room.track.currentTime).to.equal(0);
         done();
@@ -30,7 +31,7 @@ describe('Room', function() {
     });
 
     it('creates an empty clients array', function(done) {
-      Room.fetch(1).then(function(room) {
+      Room.fetch(67).then(function(room) {
         expect(room.clients).to.be.empty();
         done();
       });
@@ -39,10 +40,10 @@ describe('Room', function() {
 
   describe('.nextTrack', function() {
     var track = Track.create({url: 'http://test.host/rock.mp3'}),
-        room = Room.create(1, track);
+        room = Room.create(67, track);
 
     beforeEach(function() {
-      util.mockPatch('/rooms/1/next_track', {
+      util.mockPatch('/rooms/67/next_track', {
         track: { url: 'http://test.host/jazz.mp3' }
       });
     });
@@ -61,5 +62,31 @@ describe('Room', function() {
         done();
       });
     });
+  });
+
+  describe('.recalculateCurrentTime', function() {
+    var track = Track.create({url: 'http://test.host/rock.mp3'}),
+        room = Room.create(67, track);
+
+    it('sets to client\'s currentTime if there is one client', function() {
+      var client = Client.create();
+      client.currentTime = 25;
+      room.clients = [client];
+      room.recalculateCurrentTime();
+      expect(room.track.currentTime).to.equal(25);
+    });
+
+    it('averages the clients\' times if there are multiple clients', function() {
+      var clients = [1,2,3,4,5].map(function(i) {
+        var client = Client.create();
+        client.currentTime = i;
+        return client;
+      });
+
+      room.clients = clients;
+      room.recalculateCurrentTime();
+      expect(room.track.currentTime).to.equal(3);
+    });
+
   });
 });

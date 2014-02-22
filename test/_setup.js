@@ -1,5 +1,4 @@
 var RSVP = require('rsvp'),
-    nock = require('nock'),
     config = require('../lib/config');
 
 config.baseUrl = 'http://test.host';
@@ -9,6 +8,3 @@ config.baseUrl = 'http://test.host';
 RSVP.on('error', function(err) {
   throw err;
 });
-
-// Don't allow real requests!
-nock.disableNetConnect();
