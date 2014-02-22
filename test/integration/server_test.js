@@ -23,8 +23,6 @@ describe('Server', function() {
 
   it('records progress', function(done) {
     client.once('new_track', function(track) {
-      expect(track.currentTime).to.equal(0);
-
       client.once('new_track', function(track) {
         expect(track.currentTime).to.equal(25);
         done();

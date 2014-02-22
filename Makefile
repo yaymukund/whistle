@@ -1,5 +1,7 @@
 .PHONY: test integration
 
+all: test integration
+
 test:
 	mocha test/_setup.js test/*_test.js
 
