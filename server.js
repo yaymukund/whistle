@@ -2,6 +2,8 @@ exports.start = function(port, done) {
   var io = require('socket.io').listen(port, done),
       Client = require('./lib/client');
 
+  exports.io = io;
+
   io.sockets.on('connection', function(socket) {
     var client = Client.create(socket);
 

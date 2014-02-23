@@ -19,6 +19,17 @@ describe('Room', function() {
     it('attaches a blank Track to newly created rooms', function() {
       expect(room.track).to.be.an('object');
     });
+
+    it('sets the object in the global array', function() {
+      expect(Room.all[99]).to.equal(room);
+    });
+  });
+
+  describe('.findOrCreate', function() {
+    it('returns an existing room with that ID if one exists', function() {
+      var room = Room.create(100);
+      expect(Room.findOrCreate(100)).to.equal(room);
+    });
   });
 
   describe('.newTrack', function() {
