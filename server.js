@@ -8,6 +8,7 @@ exports.start = function(port, done) {
     socket.on('join_room', client.joinRoom.bind(client));
     socket.on('progress', client.progress.bind(client));
     socket.on('done_track', client.doneTrack.bind(client));
+    socket.on('disconnect', client.disconnect.bind(client));
   });
 
   return io.server;
