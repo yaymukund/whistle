@@ -18,5 +18,6 @@ exports.start = function(port, done) {
 
 // http://nodejs.org/api/modules.html#modules_accessing_the_main_module
 if (require.main === module) {
-  exports.start(3001, null);
+  var port = parseInt(process.argv[2], 10) || 3001;
+  exports.start(port, null);
 }
