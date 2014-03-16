@@ -11,6 +11,7 @@ exports.start = function(port, done) {
     socket.on('progress', client.progress.bind(client));
     socket.on('done_track', client.doneTrack.bind(client));
     socket.on('disconnect', client.disconnect.bind(client));
+    socket.on('uploaded_track', client.uploadedTrack.bind(client));
   });
 
   return io.server;
