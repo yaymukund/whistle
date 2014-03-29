@@ -12,6 +12,7 @@ exports.start = function(port, done) {
     socket.on('done_track', client.doneTrack.bind(client));
     socket.on('disconnect', client.disconnect.bind(client));
     socket.on('uploaded_track', client.uploadedTrack.bind(client));
+    socket.on('get_current_time', client.getCurrentTime.bind(client));
   });
 
   return io.server;
